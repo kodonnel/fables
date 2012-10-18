@@ -1,4 +1,4 @@
-SampleApp::Application.routes.draw do
+Fables::Application.routes.draw do
   resources :users
   resources :sessions,   only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]

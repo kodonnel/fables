@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-SampleApp::Application.load_tasks
+Fables::Application.load_tasks
