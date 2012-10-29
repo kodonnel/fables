@@ -6,7 +6,7 @@ Fables::Application.routes.draw do
     end
   end
   resources :sessions,   only: [:new, :create, :destroy]
-  resources :microposts, only: [:create, :destroy]
+  resources :microposts, only: [:create, :show, :destroy]
   resources :relationships, only: [:create, :destroy]
   resources :password_resets
 
