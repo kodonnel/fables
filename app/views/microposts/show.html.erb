@@ -15,4 +15,11 @@
     <h3><%= @micropost.name %></h3>
         <%= @micropost.content %>
   </div>
+
+  <% if current_user?(@micropost.user) %>
+    <% if @micropost.survey.nil? %>
+      
+      <%= link_to "Create Survey", new_survey_path%>
+    <% end %>
+  <% end %>
 </div>
