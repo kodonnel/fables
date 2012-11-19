@@ -3,4 +3,5 @@ class Survey < ActiveRecord::Base
   has_many :questions, :dependent => :destroy
   belongs_to :micropost
   accepts_nested_attributes_for :questions, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true
+  attr_accessible :questions_attributes
 end
