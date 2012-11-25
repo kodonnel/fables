@@ -19,7 +19,7 @@
   <% if current_user?(@micropost.user) %>
     <% if @micropost.survey.nil? %>
       
-      <%= link_to "Create Survey", new_survey_path%>
+      <%= link_to "Create Survey", new_survey_path(:micropost => @micropost) %>
     <% end %>
   <% end %>
 </div>

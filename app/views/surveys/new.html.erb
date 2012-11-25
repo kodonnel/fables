@@ -1,7 +1,10 @@
 <% title "New Survey" %>
-<script>
 
-</script>
-<%= render :partial => 'form' %>
+<pre>
+  <%= @survey.inspect %>
+  <%= @micropost.inspect %>
+</pre>
+
+<%= render :partial => 'form', :locals => {:micropost => @micropost} %>
 
 <p><%= link_to "Back to List", surveys_path %></p>

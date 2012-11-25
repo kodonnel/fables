@@ -1,4 +1,7 @@
 class SurveysController < ApplicationController
+
+  before_filter :signed_in_user
+
   def index
     @surveys = Survey.all
   end
@@ -7,22 +10,33 @@ class SurveysController < ApplicationController
     @survey = Survey.find(params[:id])
   end
   
-  def new
-    @survey = Survey.new
-    3.times do
-      question = @survey.questions.build
-      4.times { question.answers.build }
-    end
-  end
-  
   def create
-    @survey = Survey.new(params[:survey])
+    @survey = Survey.find(params[:survey])
+    #@micropost = Micropost.find(params[:micropost])
+   
+    @survey.save!
     if @survey.save
       flash[:notice] = "Successfully created survey."
       redirect_to @survey
     else
       render :action => 'new'
+      flash[:success] = "Survey not saved!"
     end
+  end
+
+  def new
+    @micropost = Micropost.find(params[:micropost])
+    @survey = @micropost.create_survey
+    @survey.name = "Title"
+    3.times do
+      question = @survey.questions.build
+      question.content = "Sample question content"
+      4.times do
+        answer = question.answers.build
+        answer.content = "Sample answer content"
+      end
+    end
+    @survey.save!
   end
   
   def edit

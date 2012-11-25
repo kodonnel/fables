@@ -15,4 +15,19 @@ FactoryGirl.define do
     content "Lorem ipsum"
     user
   end
+
+  factory :survey do
+    name "Survey"
+    micropost
+  end
+
+  factory :question do
+    content "This is a question."
+    survey
+  end
+
+  factory :answer do
+    content "This is an answer."
+    question
+  end
 end

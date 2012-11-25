@@ -22,11 +22,6 @@ class MicropostsController < ApplicationController
     redirect_to root_url
   end
 
-  def create_survey
-    @micropost = Micropost.find(params[:id])
-    @micropost.survey = Survey.new
-  end
-
   private
 
     def correct_user
