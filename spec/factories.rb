@@ -17,7 +17,7 @@ FactoryGirl.define do
   end
 
   factory :survey do
-    name "Survey"
+    sequence(:name)  { |n| "Survey #{n}" }
     micropost
   end
 
@@ -29,5 +29,9 @@ FactoryGirl.define do
   factory :answer do
     content "This is an answer."
     question
+  end
+
+  factory :response do
+    association :survey
   end
 end

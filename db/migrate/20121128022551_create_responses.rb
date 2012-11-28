@@ -1,5 +1,7 @@
 class CreateResponses < ActiveRecord::Migration
   def change
+  	drop_table :responses
+
     create_table :responses do |t|
       t.integer :user_id
       t.integer :survey_id
@@ -9,7 +11,7 @@ class CreateResponses < ActiveRecord::Migration
       t.timestamps
     end
 
-      add_index :responses, :survey_id
-      add_index :responses, [:survey_id,:question_id], unique: true
+    add_index :responses, :survey_id
+    add_index :responses, [:survey_id,:question_id], unique: true
   end
 end
