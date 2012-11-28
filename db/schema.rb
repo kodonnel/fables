@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121102030457) do
+ActiveRecord::Schema.define(:version => 20121128012204) do
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
@@ -45,6 +45,18 @@ ActiveRecord::Schema.define(:version => 20121102030457) do
   add_index "relationships", ["followed_id"], :name => "index_relationships_on_followed_id"
   add_index "relationships", ["follower_id", "followed_id"], :name => "index_relationships_on_follower_id_and_followed_id", :unique => true
   add_index "relationships", ["follower_id"], :name => "index_relationships_on_follower_id"
+
+  create_table "responses", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "survey_id"
+    t.integer  "question_id"
+    t.integer  "answer_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "responses", ["survey_id", "question_id"], :name => "index_responses_on_survey_id_and_question_id", :unique => true
+  add_index "responses", ["survey_id"], :name => "index_responses_on_survey_id"
 
   create_table "surveys", :force => true do |t|
     t.string   "name"
