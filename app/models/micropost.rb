@@ -1,7 +1,6 @@
 class Micropost < ActiveRecord::Base
-  attr_accessible :content, :name
+  attr_accessible :content, :name, :surveyURL
 	belongs_to :user
-  has_one :survey, dependent: :destroy
 
   validates :name, presence: true
 	validates :content, presence: true

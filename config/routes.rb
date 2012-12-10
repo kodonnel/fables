@@ -1,15 +1,19 @@
 Fables::Application.routes.draw do
 
   resources :users do
+    
     member do
       get :following, :followers
     end
   end
   resources :sessions,   only: [:new, :create, :destroy]
-  resources :microposts, only: [:create, :show, :destroy]
+  resources :microposts, only: [:create, :update, :show, :destroy]
   resources :relationships, only: [:create, :destroy]
   resources :password_resets
-  resources :surveys
+
+  resources :surveys do
+    resources :responses
+  end
 
   root to: 'static_pages#home'
   

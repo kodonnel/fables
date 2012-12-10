@@ -17,9 +17,19 @@
   </div>
 
   <% if current_user?(@micropost.user) %>
-    <% if @micropost.survey.nil? %>
-      
-      <%= link_to "Create Survey", new_survey_path(:micropost => @micropost) %>
+    <% if @micropost.surveyURL.nil? %>
+      <%= link_to "Create a Survey with Survey Monkey", "http://www.surveymonkey.com/" %>
+      <%= form_for @micropost do |f| %>  
+        <p>
+          <%= f.text_field :surveyURL %>
+        </p>
+
+        <p><%= f.submit "Add link to survey." %></p>
+      <% end %>
+
+    <% else %>
+
+      <%= link_to "Take Survey", @micropost.surveyURL, :target => '_blank' %>
     <% end %>
   <% end %>
 </div>
