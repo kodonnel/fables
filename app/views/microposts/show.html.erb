@@ -13,7 +13,9 @@
   </aside>
   <div class="span8">
     <h3><%= @micropost.name %></h3>
+        <%= @micropost.tag_names %>
         <%= @micropost.content %>
+        <%= link_to "Edit", edit_micropost_path(@micropost.id) %>
   </div>
 
   <% if current_user?(@micropost.user) %>

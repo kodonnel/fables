@@ -7,19 +7,15 @@ Fables::Application.routes.draw do
     end
   end
   resources :sessions,   only: [:new, :create, :destroy]
-  resources :microposts, only: [:create, :update, :show, :destroy]
+  resources :microposts, only: [:create, :update, :show, :destroy, :edit]
   resources :relationships, only: [:create, :destroy]
   resources :password_resets
-
-  resources :surveys do
-    resources :responses
-  end
 
   root to: 'static_pages#home'
   
   get '/signup',  to: 'users#new'
   get '/signin',  to: 'sessions#new'
-  get '/signout', to: 'sessions#destroy', via: :delete
+  delete '/signout', to: 'sessions#destroy', via: :delete
   get '/help',    to: 'static_pages#help'
   get '/about',   to: 'static_pages#about'
   get '/contact', to: 'static_pages#contact'
