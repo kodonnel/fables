@@ -12,12 +12,6 @@ class Micropost < ActiveRecord::Base
   attr_writer :tag_names
   after_save :assign_tags
 
-  searchable do 
-    text :name, :boost => 5
-    text :content
-    text :tag_names, :boost => 3
-  end
-
 	# Returns microposts from the users being followed by the given user.
   def self.from_users_followed_by(user)
     followed_user_ids = "SELECT followed_id FROM relationships

@@ -3,11 +3,7 @@ class MicropostsController < ApplicationController
   before_filter :correct_user,   only: :destroy
 
   def index
-    @search = Micropost.search do
-      fulltext params[:search]
-    end
-
-    @microposts = @search.results
+    @microposts = Micropost.paginate(page: params[:page])
   end
 
 	def create
