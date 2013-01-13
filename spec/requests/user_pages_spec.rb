@@ -6,7 +6,7 @@ describe "User pages" do
 
   describe "index" do
 
-    let(:user) { FactoryGirl.create(:user) }
+    let!(:user) { FactoryGirl.create(:user) }
    
     before(:each) do
       sign_in user
@@ -19,7 +19,9 @@ describe "User pages" do
     describe "pagination" do
 
       before(:all) { 30.times { FactoryGirl.create(:user) } }
+
       after(:all)  { User.delete_all }
+
 
       it { should have_selector('div.pagination') }
 
@@ -35,7 +37,7 @@ describe "User pages" do
       it { should_not have_link('delete') }
 
       describe "as an admin user" do
-        let(:admin) { FactoryGirl.create(:admin) }
+        let!(:admin) { FactoryGirl.create(:admin) }
         before do
           sign_in admin
           visit users_path
