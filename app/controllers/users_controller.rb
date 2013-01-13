@@ -14,7 +14,12 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.paginate(page: params[:page])
+    @search = User.search do
+      fulltext params[:search]
+      paginate :page => params[:page]
+    end
+
+    @users = @search.results
   end
 
   def create

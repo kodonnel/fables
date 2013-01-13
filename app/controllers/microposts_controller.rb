@@ -2,6 +2,14 @@ class MicropostsController < ApplicationController
   before_filter :signed_in_user
   before_filter :correct_user,   only: :destroy
 
+  def index
+    @search = Micropost.search do
+      fulltext params[:search]
+    end
+
+    @microposts = @search.results
+  end
+
 	def create
     @micropost = current_user.microposts.build(params[:micropost])
     if @micropost.save

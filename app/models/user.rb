@@ -31,6 +31,10 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: { minimum: 6 }
   validates :password_confirmation, presence: true
 
+  searchable do 
+    text :name
+  end
+
   def feed
     Micropost.from_users_followed_by(self)
   end
