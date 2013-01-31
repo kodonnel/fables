@@ -4,13 +4,23 @@ class Micropost < ActiveRecord::Base
   has_many :taggings, :dependent => :destroy
   has_many :tags, :through => :taggings
 
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
   validates :name, presence: true
 	validates :content, presence: true
 	validates :user_id, presence: true
 	default_scope order: 'microposts.created_at DESC'
 
+
   attr_writer :tag_names
   after_save :assign_tags
+
+  def self.search(params)
+    tire.search(load: true) do
+      query { string params[:query], default_operator: "AND" } if params[:query].present?
+    end
+  end
 
 	# Returns microposts from the users being followed by the given user.
   def self.from_users_followed_by(user)

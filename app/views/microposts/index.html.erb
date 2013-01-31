@@ -4,6 +4,14 @@
 <%= will_paginate %>
 
 <ul class="microposts">
+
+<%= form_tag microposts_path, method: :get do %>
+  <p>
+    <%= text_field_tag :query, params[:query] %>
+    <%= submit_tag "Search", name: nil %>
+  </p>
+<% end %>
+
   <%= render @microposts %>
 </ul>
 
