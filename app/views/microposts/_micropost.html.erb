@@ -12,3 +12,13 @@
     <%= link_to "edit", edit_micropost_path(micropost) %>
   <% end %>
 </li>
+<% if micropost.tags.any? %>
+  <li>
+    <span class="tags">
+      Tags:
+      <% micropost.tags.each do |tag| %>
+      <%= tag.name %>
+      <% end %>
+    </span>
+  </li>
+<% end %>
