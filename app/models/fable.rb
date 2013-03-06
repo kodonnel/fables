@@ -16,6 +16,16 @@ class Fable < ActiveRecord::Base
   attr_writer :tag_names
   after_save :assign_tags
 
+  def to_indexed_json
+        #tags      = tags_names.split(/ /)
+
+        {
+          :name   => name,
+          :content => content,
+          :tag_names  => tag_names
+        }.to_json
+      end
+
   def self.search(params)
     tire.search(load: true) do
       query { string params[:query], default_operator: "AND" } if params[:query].present?
