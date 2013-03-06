@@ -12,7 +12,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :micropost do
+  factory :fable do
     sequence(:name) { |n| "Chapter #{n}"}
     content "Lorem ipsum"
     user

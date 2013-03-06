@@ -61,18 +61,18 @@ describe "User pages" do
 
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
-    let!(:m1) { FactoryGirl.create(:micropost, user: user, name: "Chapter 1", content: "Foo") }
-    let!(:m2) { FactoryGirl.create(:micropost, user: user, name: "Chapter 2", content: "Bar") }
+    let!(:m1) { FactoryGirl.create(:fable, user: user, name: "Chapter 1", content: "Foo") }
+    let!(:m2) { FactoryGirl.create(:fable, user: user, name: "Chapter 2", content: "Bar") }
 
     before { visit user_path(user) }
 
     it { should have_selector('h1',    text: user.name) }
     it { should have_selector('title', text: user.name) }
 
-    describe "microposts" do
+    describe "fables" do
       it { should have_content(m1.name)}
       it { should have_content(m2.name)}
-      it { should have_content(user.microposts.count) }
+      it { should have_content(user.fables.count) }
     end
 
     describe "follow/unfollow buttons" do

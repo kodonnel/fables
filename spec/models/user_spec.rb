@@ -28,7 +28,7 @@ describe User do
   it { should respond_to(:remember_token) }
   it { should respond_to(:admin) }
   it { should respond_to(:authenticate) }
-  it { should respond_to(:microposts) }
+  it { should respond_to(:fables) }
   it { should respond_to(:feed) }
   it { should respond_to(:relationships) }
   it { should respond_to(:followed_users) }
@@ -146,45 +146,45 @@ describe User do
     its(:remember_token) { should_not be_blank }
   end
 
-  describe "micropost associations" do
+  describe "fable associations" do
 
     before { @user.save }
-    let!(:older_micropost) do 
-      FactoryGirl.create(:micropost, user: @user, created_at: 1.day.ago)
+    let!(:older_fable) do 
+      FactoryGirl.create(:fable, user: @user, created_at: 1.day.ago)
     end
-    let!(:newer_micropost) do
-      FactoryGirl.create(:micropost, user: @user, created_at: 1.hour.ago)
-    end
-
-    it "should have the right microposts in the right order" do
-      @user.microposts.should == [newer_micropost, older_micropost]
+    let!(:newer_fable) do
+      FactoryGirl.create(:fable, user: @user, created_at: 1.hour.ago)
     end
 
-    it "should destroy associated microposts" do
-      microposts = @user.microposts
+    it "should have the right fables in the right order" do
+      @user.fables.should == [newer_fable, older_fable]
+    end
+
+    it "should destroy associated fables" do
+      fables = @user.fables
       @user.destroy
-      microposts.each do |micropost|
-        Micropost.find_by_id(micropost.id).should be_nil
+      fables.each do |fable|
+        Fable.find_by_id(fable.id).should be_nil
       end
     end
 
     describe "status" do
       let(:unfollowed_post) do
-        FactoryGirl.create(:micropost, user: FactoryGirl.create(:user))
+        FactoryGirl.create(:fable, user: FactoryGirl.create(:user))
       end
       let(:followed_user) { FactoryGirl.create(:user) }
 
       before do
         @user.follow!(followed_user)
-        3.times { followed_user.microposts.create!(name: "Chapter 1", content: "Lorem ipsum") }
+        3.times { followed_user.fables.create!(name: "Chapter 1", content: "Lorem ipsum") }
       end
 
-      its(:feed) { should include(newer_micropost) }
-      its(:feed) { should include(older_micropost) }
+      its(:feed) { should include(newer_fable) }
+      its(:feed) { should include(older_fable) }
       its(:feed) { should_not include(unfollowed_post) }
       its(:feed) do
-        followed_user.microposts.each do |micropost|
-          should include(micropost)
+        followed_user.fables.each do |fable|
+          should include(fable)
         end
       end
     end

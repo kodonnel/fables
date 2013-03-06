@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Tag do
   let(:user) { FactoryGirl.create(:user) }
-  let(:micropost) { user.microposts.build(name: "Chapter 1", content: "Lorem ipsum") }
+  let(:fable) { user.fables.build(name: "Chapter 1", content: "Lorem ipsum") }
 
-	before { @tag = micropost.tags.build(name: "genre") }
+	before { @tag = fable.tags.build(name: "genre") }
 	
   subject { @tag }
 
