@@ -1,0 +1,18 @@
+<% provide(:title, 'All fables') %>
+<h1>All fables</h1>
+
+<%= will_paginate %>
+
+<ul class="fables">
+
+<%= form_tag fables_path, method: :get do %>
+  <p>
+    <%= text_field_tag :query, params[:query] %>
+    <%= submit_tag "Search", name: nil %>
+  </p>
+<% end %>
+
+  <%= render @fables %>
+</ul>
+
+<%= will_paginate %>

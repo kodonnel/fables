@@ -1,0 +1,37 @@
+<% provide(:title, @fable.name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+        <%= gravatar_for @fable.user %>
+        <%= @fable.user.name %>
+      </h1>
+    </section>
+    <section>
+      <%= render 'shared/stats' %>
+    </section>
+  </aside>
+  <div class="span8">
+    <h3><%= @fable.name %></h3>
+        <%= @fable.tag_names %>
+        <%= @fable.content %>
+        <%= link_to "Edit", edit_fable_path(@fable.id) %>
+  </div>
+
+  <% if current_user?(@fable.user) %>
+    <% if @fable.surveyURL.nil? %>
+      <%= link_to "Create a Survey with Survey Monkey", "http://www.surveymonkey.com/" %>
+      <%= form_for @fable do |f| %>  
+        <p>
+          <%= f.text_field :surveyURL %>
+        </p>
+
+        <p><%= f.submit "Add link to survey." %></p>
+      <% end %>
+
+    <% else %>
+
+      <%= link_to "Take Survey", @fable.surveyURL, :target => '_blank' %>
+    <% end %>
+  <% end %>
+</div>

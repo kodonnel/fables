@@ -1,0 +1,24 @@
+<li>
+  <span class="view">
+  	<%= link_to fable.name, fable %>
+  </span>
+  <span class="timestamp">
+    Posted <%= time_ago_in_words(fable.created_at) %> ago.
+  </span>
+  <% if current_user?(fable.user) %>
+    <%= link_to "delete", fable, method: :delete,
+                                     data: { confirm: "You sure?" },
+                                     title: fable.content %>
+    <%= link_to "edit", edit_fable_path(fable) %>
+  <% end %>
+</li>
+<% if fable.tags.any? %>
+  <li>
+    <span class="tags">
+      Tags:
+      <% fable.tags.each do |tag| %>
+      <%= tag.name %>
+      <% end %>
+    </span>
+  </li>
+<% end %>
