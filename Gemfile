@@ -18,6 +18,9 @@ group :development, :test do
   gem 'spork', '0.9.2'
   gem 'annotate', '2.5.0'
   gem 'foreman', "~> 0.60.2"
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request'
 end
 
 # Gems used only for assets and not required
