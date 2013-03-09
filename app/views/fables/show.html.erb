@@ -11,11 +11,14 @@
       <%= render 'shared/stats' %>
     </section>
   </aside>
+
   <div class="span8">
     <h3><%= @fable.name %></h3>
         <%= @fable.tag_names %>
         <%= @fable.content %>
-        <%= link_to "Edit", edit_fable_path(@fable.id) %>
+        <%if current_user?(@fable.user) %>
+          <%= link_to "Edit", edit_fable_path(@fable.id) %>
+        <% end %>
   </div>
 
   <% if current_user?(@fable.user) %>

@@ -5,7 +5,34 @@ describe "Fable pages" do
   subject { page }
 
   let(:user) { FactoryGirl.create(:user) }
+  let(:fable) { FactoryGirl.create(:fable)}
+
+
   before { sign_in user }
+
+  describe "show" do
+
+    let!(:user) { FactoryGirl.create(:user) }
+   
+    describe "with creator" do
+      before(:each) do
+        sign_in fable.user
+        visit fable_path(fable)
+      end
+      it { should have_selector('h3',    text: fable.name) }
+      it { should have_link('Edit') }
+    end
+
+    describe "with non-creator" do
+      before(:each) do
+        sign_in user
+        visit fable_path(fable)
+      end
+      it { should have_selector('h3',    text: fable.name) }
+      it { should_not have_link('Edit') }
+    end
+
+  end
 
   describe "fable creation" do
     before { visit root_path }
