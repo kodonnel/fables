@@ -7,6 +7,16 @@ class Fable < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
+  index_name "fables-#{Rails.env}"
+
+  mapping do
+    indexes :id,           :index    => :not_analyzed
+    indexes :name,        :analyzer => 'snowball', :boost => 100
+    indexes :content,      :analyzer => 'snowball'
+    indexes :content_size, :as       => 'content.size'
+    indexes :tag_names,       :analyzer => 'keyword'
+  end
+
   validates :name, presence: true
 	validates :content, presence: true
 	validates :user_id, presence: true
@@ -27,7 +37,8 @@ class Fable < ActiveRecord::Base
       end
 
   def self.search(params)
-    tire.search(load: true) do
+    Fable.tire.index.refresh
+    Fable.tire.search(load: true) do
       query { string params[:query], default_operator: "AND" } if params[:query].present?
     end
   end

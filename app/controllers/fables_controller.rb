@@ -3,8 +3,7 @@ class FablesController < ApplicationController
   before_filter :correct_user,   only: :destroy
 
   def index
-    @fables = Fable.search(params)
-    
+    @fables = Fable.search(params)  
   end
 
 	def create
