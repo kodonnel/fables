@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @fables = @user.fables.paginate(page: params[:page])
+    @links = @user.links.paginate(page: params[:page])
   end
 
 	def new

@@ -1,6 +1,7 @@
 class Fable < ActiveRecord::Base
   attr_accessible :content, :name, :surveyURL, :tag_names
 	belongs_to :user
+  has_many :links, :dependent => :destroy, :as => :linkable
   has_many :taggings, :dependent => :destroy
   has_many :tags, :through => :taggings
 

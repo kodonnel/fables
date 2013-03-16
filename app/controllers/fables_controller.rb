@@ -19,6 +19,7 @@ class FablesController < ApplicationController
 
   def show
     @fable = Fable.find(params[:id])
+    @links = @fable.links.paginate(page: params[:page])
   end
 
   def update

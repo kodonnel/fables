@@ -5,9 +5,13 @@ Fables::Application.routes.draw do
     member do
       get :following, :followers
     end
+    resources :links
   end
   resources :sessions,   only: [:new, :create, :destroy]
-  resources :fables, only: [:create, :update, :show, :destroy, :edit, :index]
+  resources :fables, only: [:create, :update, :show, :destroy, :edit, :index] do
+    resources :links
+  end
+  resources :links, only: [:new, :create, :update, :show, :destroy, :edit, :index]
   resources :relationships, only: [:create, :destroy]
   resources :password_resets
 

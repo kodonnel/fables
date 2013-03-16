@@ -1,0 +1,13 @@
+<% @links.each do |l| %>
+<ol id="<%= l.id %>">
+    <span class="address">
+      <%= l.url %>
+    </span>
+  <% if l.linkable_type == "User" %>
+  	<% if current_user?(l.linkable) %>
+  		<%= link_to "delete", l, :method => :delete, :class => 'dellink' %>
+    	
+    <% end %>
+  <% end %>
+</ol>
+<% end %>

@@ -10,30 +10,24 @@
     <section>
       <%= render 'shared/stats' %>
     </section>
+    <section>
+      <%= render 'shared/links', collection: @fable.links %>
+      <br>
+      <%if current_user?(@fable.user) %>
+        <%= render 'shared/link', :linkable => @fable, :link => @fable.links.build %>
+      <% end %>
+    </section>
   </aside>
 
+  <section>
   <div class="span8">
     <h3><%= @fable.name %></h3>
-        <%= @fable.content %>
         <%if current_user?(@fable.user) %>
-          <%= link_to "Edit", edit_fable_path(@fable.id) %>
+          <%= link_to "edit", edit_fable_path(@fable.id) %>
         <% end %>
+        <br>
+        <%= @fable.content %>
   </div>
 
-  <% if current_user?(@fable.user) %>
-    <% if @fable.surveyURL.nil? %>
-      <%= link_to "Create a Survey with Survey Monkey", "http://www.surveymonkey.com/" %>
-      <%= form_for @fable do |f| %>  
-        <p>
-          <%= f.text_field :surveyURL %>
-        </p>
-
-        <p><%= f.submit "Add link to survey." %></p>
-      <% end %>
-
-    <% else %>
-
-      <%= link_to "Take Survey", @fable.surveyURL, :target => '_blank' %>
-    <% end %>
-  <% end %>
+</section>
 </div>

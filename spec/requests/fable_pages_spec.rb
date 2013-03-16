@@ -20,7 +20,7 @@ describe "Fable pages" do
         visit fable_path(fable)
       end
       it { should have_selector('h3',    text: fable.name) }
-      it { should have_link('Edit') }
+      it { should have_link('edit') }
     end
 
     describe "with non-creator" do
