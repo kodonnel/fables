@@ -6,10 +6,10 @@
     Posted <%= time_ago_in_words(fable.created_at) %> ago.
   </span>
   <% if current_user?(fable.user) %>
-    <%= link_to "delete", fable, method: :delete,
+    <%= link_to image_tag("delete-icon2.png"), fable, method: :delete,
                                      data: { confirm: "You sure?" },
                                      title: fable.content %>
-    <%= link_to "edit", edit_fable_path(fable) %>
+    <%= link_to image_tag("edit-icon.png"), edit_fable_path(fable) %>
   <% end %>
 </li>
 <% if fable.tags.any? %>

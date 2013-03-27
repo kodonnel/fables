@@ -3,11 +3,8 @@
     <span class="address">
       <%= l.url %>
     </span>
-  <% if l.linkable_type == "User" %>
-  	<% if current_user?(l.linkable) %>
-  		<%= link_to "delete", l, :method => :delete, :class => 'dellink' %>
-    	
+  	<% if current_user?(l.get_user()) %>
+  		<%= link_to image_tag("delete-icon.png"), l, :method => :delete, :class => 'dellink' %>
     <% end %>
-  <% end %>
 </ol>
 <% end %>

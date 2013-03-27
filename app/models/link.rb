@@ -4,4 +4,12 @@ class Link < ActiveRecord::Base
 
   validates :url, presence: true
   validates :linkable_id, presence: true
+
+  def get_user
+    if linkable_type == "User"  
+      @user = linkable
+    else
+      @user = linkable.user
+    end
+  end
 end
