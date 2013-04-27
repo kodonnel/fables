@@ -1,10 +1,10 @@
 <% @links.each do |l| %>
 <ol id="<%= l.id %>">
     <span class="address">
-      <%= l.url %>
+      <%= link_to l.url %>
     </span>
   	<% if current_user?(l.get_user()) %>
-  		<%= link_to image_tag("delete-icon.png"), l, :method => :delete, :class => 'dellink' %>
+  		<%= link_to image_tag("delete-icon2.png"), l, :method => :delete, :class => 'dellink' %>
     <% end %>
 </ol>
 <% end %>

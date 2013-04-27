@@ -66,7 +66,7 @@ describe "Fable pages" do
       before { visit root_path }
 
       it "should delete a fable" do
-        expect { click_link "delete" }.to change(Fable, :count).by(-1)
+        expect { find("//a[contains(@data-method,'delete')]").click }.to change(Fable, :count).by(-1)
       end
     end
   end
