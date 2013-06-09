@@ -10,7 +10,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :email, :name, :password, :password_confirmation
+  attr_accessible :email, :name, :password, :password_confirmation, :account_active
   has_secure_password
   has_many :fables, dependent: :destroy
   has_many :links, dependent: :destroy, :as => :linkable
@@ -31,6 +31,15 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: 6 }
   validates :password_confirmation, presence: true
+
+  def activate!
+    self.account_active = true
+    save( :validate => false )
+  end
+
+  def account_activated?
+    self.account_active
+  end
 
   def feed
     Fable.from_users_followed_by(self)
@@ -59,6 +68,13 @@ class User < ActiveRecord::Base
     self.password_reset_sent_at = Time.zone.now
     self.update_attribute( :password_reset_token, self.password_reset_token)
     UserMailer.password_reset(self).deliver
+  end
+
+  def send_account_activation
+    generate_token(:account_activation_token)
+    self.account_activation_sent_at = Time.zone.now
+    self.update_attribute( :account_activation_token, self.account_activation_token)
+    UserMailer.account_activation(self).deliver
   end
 
   private

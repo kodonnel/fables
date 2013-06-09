@@ -14,6 +14,7 @@ Fables::Application.routes.draw do
   resources :links, only: [:new, :create, :update, :show, :destroy, :edit, :index]
   resources :relationships, only: [:create, :destroy]
   resources :password_resets
+  resources :account_activations
 
   root to: 'static_pages#home'
   

@@ -6,7 +6,7 @@ describe "User pages" do
 
   describe "index" do
 
-    let!(:user) { FactoryGirl.create(:user) }
+    let!(:user) { FactoryGirl.create(:user, account_active: true) }
    
     before(:each) do
       sign_in user
@@ -18,7 +18,7 @@ describe "User pages" do
 
     describe "pagination" do
 
-      before(:all) { 30.times { FactoryGirl.create(:user) } }
+      before(:all) { 30.times { FactoryGirl.create(:user, account_active: true) } }
 
       after(:all)  { User.delete_all }
 
@@ -37,7 +37,7 @@ describe "User pages" do
       it { should_not have_link('delete') }
 
       describe "as an admin user" do
-        let!(:admin) { FactoryGirl.create(:admin) }
+        let!(:admin) { FactoryGirl.create(:admin, account_active: true) }
         before do
           sign_in admin
           visit users_path
@@ -60,7 +60,7 @@ describe "User pages" do
   end
 
   describe "profile page" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryGirl.create(:user, account_active: true) }
     let!(:m1) { FactoryGirl.create(:fable, user: user, name: "Chapter 1", content: "Foo") }
     let!(:m2) { FactoryGirl.create(:fable, user: user, name: "Chapter 2", content: "Bar") }
 
@@ -76,7 +76,7 @@ describe "User pages" do
     end
 
     describe "follow/unfollow buttons" do
-      let(:other_user) { FactoryGirl.create(:user) }
+      let(:other_user) { FactoryGirl.create(:user, account_active: true) }
       before { sign_in user }
 
       describe "following a user" do
@@ -160,16 +160,15 @@ describe "User pages" do
         before { click_button submit }
         let(:user) { User.find_by_email('user@example.com') }
 
-        it { should have_selector('title', text: user.name) }
-        it { should have_selector('div.alert.alert-success', text: 'Welcome') }
+        it { should have_selector('div.alert.alert-success', text: 'Confirmation email has been sent.') }
 
-        it { should have_link('Sign out') }
+        it { should have_link('Sign in') }
       end
     end
   end
 
   describe "edit" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryGirl.create(:user, account_active: true) }
     before do
       sign_in user
       visit edit_user_path(user)
@@ -207,8 +206,8 @@ describe "User pages" do
   end
 
    describe "following/followers" do
-    let(:user) { FactoryGirl.create(:user) }
-    let(:other_user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryGirl.create(:user, account_active: true) }
+    let(:other_user) { FactoryGirl.create(:user, account_active: true) }
     before { user.follow!(other_user) }
 
     describe "followed users" do

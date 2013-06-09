@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   
-  before_filter :signed_in_user, only: [:index, :edit, :update, :destroy, :following, :followers]
-  before_filter :correct_user,   only: [:edit, :update]
+  before_filter :signed_in_user,      only: [:index, :edit, :update, :destroy, :following, :followers]
+  before_filter :correct_user,        only: [:edit, :update]
+  before_filter :user_account_active, only: [:index]
   before_filter :admin_user,     only: :destroy
 
   def show
@@ -21,9 +22,14 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      sign_in @user
-      flash[:success] = "Welcome to the Fables!"
-      redirect_to @user
+      flash[:success] = "User created."
+      
+      if @user.send_account_activation
+        flash[:success] = "Confirmation email has been sent."
+      end
+      #sign_in @user
+      #flash[:success] = "Welcome to the Fables!"
+      redirect_to root_path
     else
       render 'new'
     end
@@ -71,5 +77,9 @@ class UsersController < ApplicationController
 
     def admin_user
       redirect_to(root_path) unless current_user.admin?
+    end
+
+    def user_account_active
+      redirect_to(root_path) unless current_user.account_active?
     end
 end

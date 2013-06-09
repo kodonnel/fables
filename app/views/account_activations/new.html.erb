@@ -1,0 +1,10 @@
+<% provide(:title, 'Account Activation') %>
+<h1>Account Activation</h1>
+
+<%= form_tag account_activations_path, :method => :post do %>
+  <div class="field">
+    <%= label_tag :email %>
+    <%= text_field_tag :email, params[:email] %>
+  </div>
+  <div class="actions"><%= submit_tag "Send Activation Token" %></div>
+<% end %>

@@ -5,12 +5,17 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by_email(params[:session][:email].downcase)
-    if user && user.authenticate(params[:session][:password])
-      sign_in user
-      redirect_back_or user
+    if user && user.account_activated?
+      if user && user.authenticate(params[:session][:password])
+        sign_in user
+        redirect_back_or user
+      else
+        flash.now[:error] = 'Invalid email/password combination'
+        render 'new'
+      end
     else
-      flash.now[:error] = 'Invalid email/password combination'
-      render 'new'
+        flash.now[:error] = 'Account not found or not active.'
+        render 'new'
     end
   end
 

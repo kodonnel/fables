@@ -15,7 +15,16 @@ describe "Authentication" do
   describe "signin" do
     before { visit signin_path }
 
+    describe "with no information" do
+      before { click_button "Sign in" }
+
+      it { should have_selector('title', text: 'Sign in') }
+      it { should have_selector('div.alert.alert-error', text: 'Account not found or not active.') }
+    end
+
     describe "with invalid information" do
+      let(:user) { FactoryGirl.create(:user, account_active: true) }
+      before { fill_in "Email",    with: user.email }
       before { click_button "Sign in" }
 
       it { should have_selector('title', text: 'Sign in') }
@@ -29,8 +38,9 @@ describe "Authentication" do
 
   
   describe "with valid information" do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryGirl.create(:user, account_active: true) }
       before {sign_in user }
+      before {visit user_path(user)}
 
       it { should have_selector('title', text: user.name) }
       it { should have_link('Users',    href: users_path) }
@@ -49,7 +59,7 @@ describe "Authentication" do
   describe "authorization" do
 
     describe "for non-signed-in users" do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryGirl.create(:user, account_active: true) }
 
       describe "in the Relationships controller" do
         describe "submitting to the create action" do
@@ -122,8 +132,8 @@ describe "Authentication" do
     end
 
     describe "as wrong user" do
-      let(:user) { FactoryGirl.create(:user) }
-      let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
+      let(:user) { FactoryGirl.create(:user, account_active: true) }
+      let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com", account_active: true) }
       before { sign_in user }
 
       describe "visiting Users#edit page" do
@@ -138,8 +148,8 @@ describe "Authentication" do
     end
 
     describe "as non-admin user" do
-      let(:user) { FactoryGirl.create(:user) }
-      let(:non_admin) { FactoryGirl.create(:user) }
+      let(:user) { FactoryGirl.create(:user, account_active: true) }
+      let(:non_admin) { FactoryGirl.create(:user, account_active: true) }
 
       before { sign_in non_admin }
 
